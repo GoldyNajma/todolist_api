@@ -19,7 +19,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'name', 'email', 'image_path',
     ];
 
     /**
@@ -30,4 +30,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    public static function getRegisterRules() {
+        return [
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed|min:6',
+            'image_path' => 'string',
+        ];
+    }
+
+    public static function getLoginRules() {
+        return [
+            'email' => 'required|email',
+            'password' => 'required'
+        ];
+    }
 }
