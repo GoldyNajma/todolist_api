@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['login', 'register']]);
     }
 
     public function register(Request $request)
@@ -39,6 +39,33 @@ class UserController extends Controller
             return response()->json([
                 'message' => 'User registration failed.',
             ], 409);
+        }
+    }
+
+    public function login(Request $request)
+    {
+        $this->validate($request, User::$loginRules);
+        $credentials = $request->only(['email', 'password']);
+
+        if (($token = Auth::setTTL(null)->attempt($credentials))) {
+            return $this->respondWithToken($token, Auth::user());            
+        }
+
+        return response()->json([
+            'message' => 'Invalid login credentials.',
+        ], 401);
+    }
+
+    public function show($id)
+    {
+        try {
+            return response()->json([
+                'user' => User::findOrFail($id),
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'User not found.',
+            ], 404);
         }
     }
 }
