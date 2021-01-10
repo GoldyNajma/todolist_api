@@ -31,13 +31,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    public static function getRegisterRules() {
+    public static $registrationRules = [
         return [
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6',
-            'image_path' => 'string',
-        ];
+        'name' => 'required|string',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|confirmed|min:6',
+        'image_path' => 'string',
+    ];
     }
 
     public static function getLoginRules() {
