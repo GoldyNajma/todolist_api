@@ -19,6 +19,7 @@ $router->get('/', function () use ($router) {
 
 $router->post('register',   'UserController@register');
 $router->post('login',      'UserController@login');
+$router->post('logout',     'UserController@logout');
 
 $router->group(['prefix' => 'users'], function () use ($router) {
     $router->get    ('/{id}',       'UserController@show');
