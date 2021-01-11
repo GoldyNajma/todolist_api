@@ -65,4 +65,12 @@ class User extends Model
     {
         return [];
     }
+
+    /**
+     * The tasks that belong to the user.
+     */
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class);
+    }
 }

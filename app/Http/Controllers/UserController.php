@@ -31,6 +31,8 @@ class UserController extends Controller
             $user->image_path = $request->input('image_path');
             $user->save();
 
+            $user = User::find($user->id);
+
             return response()->json([
                 'user' => $user, 
                 'message' => 'User registration success.',

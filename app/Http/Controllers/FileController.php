@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 class FileController extends Controller
 {
 	const USER_STORAGE_PATH = '/uploads/user/';
+	const TASK_STORAGE_PATH = '/uploads/task/';
 	const IMAGE_KEY = 'image';
 
     private function storeFile(Request $request, $destinationPath, $fileKey) 
@@ -39,6 +40,13 @@ class FileController extends Controller
 
 	public function storeUserImage(Request $request)
 	{
-		return $this->storeFile($request, self::USER_STORAGE_PATH, self::IMAGE_KEY);
+		return $this->storeFile($request, 
+								self::USER_STORAGE_PATH, self::IMAGE_KEY);
+	}
+
+	public function storeTaskImage(Request $request)
+	{
+		return $this->storeFile($request, 
+								self::TASK_STORAGE_PATH, self::IMAGE_KEY);
 	}
 }

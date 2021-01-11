@@ -25,3 +25,8 @@ $router->group(['prefix' => 'users'], function () use ($router) {
     $router->get    ('/{id}',       'UserController@show');
     $router->post   ('/image',      'FileController@storeUserImage');
 });
+
+$router->group(['prefix' => 'tasks'], function () use ($router) {
+    $router->post   ('/',       'TaskController@store');
+    $router->post   ('/image',  'FileController@storeTaskImage');
+});
