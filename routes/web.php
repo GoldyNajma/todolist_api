@@ -27,6 +27,15 @@ $router->group(['prefix' => 'users'], function () use ($router) {
 });
 
 $router->group(['prefix' => 'tasks'], function () use ($router) {
-    $router->post   ('/',       'TaskController@store');
-    $router->post   ('/image',  'FileController@storeTaskImage');
+    $router->post   ('/',                   'TaskController@store'); 
+    $router->get    ('/',                   'TaskController@index'); 
+    $router->get    ('/completed',          'TaskController@indexCompleted');
+    $router->get    ('/uncompleted',        'TaskController@indexUncompleted');
+    $router->get    ('/deleted',            'TaskController@indexDeleted');
+    $router->get    ('/{id}',               'TaskController@show');
+    $router->put    ('/{id}',               'TaskController@update');
+    $router->delete ('/{id}',               'TaskController@softDelete');
+    $router->patch  ('/{id}/restore',       'TaskController@restore');
+    $router->delete ('/{id}/force-delete',  'TaskController@forceDelete');
+    $router->post   ('/image',              'FileController@storeTaskImage');
 });

@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -38,8 +41,15 @@ class Task extends Model
         'completed' => 'bool',
     ];
 
+    public static $updatingRules = [
+        'title' => 'required|string',
+        'description' => 'present|string|nullable',
+        'image_path' => 'present|string|nullable',
+        'completed' => 'required|bool',
+    ];
+
     /**
-     * The users that have the task.
+     * The users that belongs to the task.
      */
     public function users()
     {
