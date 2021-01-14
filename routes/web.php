@@ -34,6 +34,7 @@ $router->group(['prefix' => 'tasks'], function () use ($router) {
     $router->get    ('/deleted',            'TaskController@indexDeleted');
     $router->get    ('/{id}',               'TaskController@show');
     $router->put    ('/{id}',               'TaskController@update');
+    $router->put    ('/{id}/completion',    'TaskController@updateCompletion');
     $router->delete ('/{id}',               'TaskController@softDelete');
     $router->patch  ('/{id}/restore',       'TaskController@restore');
     $router->delete ('/{id}/force-delete',  'TaskController@forceDelete');

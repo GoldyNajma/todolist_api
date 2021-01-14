@@ -86,6 +86,7 @@ class TaskController extends Controller
 
     private function getUserTask($task_id) {
         $task = Auth::user()->tasks()
+            ->withTrashed()
             ->where('id', $task_id)
             ->first();
 
@@ -101,7 +102,7 @@ class TaskController extends Controller
 
         return response()->json([
             'message' => 'Success.',
-            'tasks' => $task,
+            'task' => $task,
         ], 200);
     }
 
@@ -132,6 +133,32 @@ class TaskController extends Controller
                 'message' => 'Failed to update task.',
             ], 409);
         }
+    }
+
+    public function updateCompletion(Request $request, $id) {
+        $this->validate($request, Task::$updateCompletionRules);
+
+        if (($task = $this->getUserTask($id)) === null) {
+            return response()->json([
+                'message' => 'Task not found.',
+            ], 404);
+        }
+
+        try {
+            $task->completed = $request->input('completed');
+            $task->save();
+
+            $task = Task::find($task->id);
+            
+            return response()->json([
+                'message' => 'Task completion updated successfully.',
+                'task' => $task, 
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Failed to update task completion.',
+            ], 409);
+        } 
     }
 
     public function softDelete($id) {
@@ -191,7 +218,7 @@ class TaskController extends Controller
 
         if ($task === null) {
             return response()->json([
-                'message' => 'Task deleted successfully.',
+                'message' => 'Task permanent deleted successfully.',
             ], 200);
         }
 

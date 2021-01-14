@@ -36,8 +36,8 @@ class Task extends Model
 
     public static $storingRules = [
         'title' => 'required|string',
-        'description' => 'string',
-        'image_path' => 'string',
+        'description' => 'string|nullable',
+        'image_path' => 'string|nullable',
         'completed' => 'bool',
     ];
 
@@ -45,6 +45,10 @@ class Task extends Model
         'title' => 'required|string',
         'description' => 'present|string|nullable',
         'image_path' => 'present|string|nullable',
+        'completed' => 'required|bool',
+    ];
+
+    public static $updateCompletionRules = [
         'completed' => 'required|bool',
     ];
 
